@@ -44,6 +44,84 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+//Task 2 - Rule of Five implementation
+
+ChatBot::ChatBot(const ChatBot &source)//copy constructor
+{
+    std::cout << "ChatBot Copy Constructor" << std::endl;
+    //std::string filename = source.
+    _image = new wxBitmap();
+    *_image = *source._image;
+
+    _chatLogic = source._chatLogic;
+     _chatLogic->SetChatbotHandle(this);
+
+    _rootNode = source._rootNode;
+    _currentNode = source._currentNode;
+}
+
+ChatBot &ChatBot::operator=(const ChatBot &source)//copy assignment operator
+{
+    std::cout << "ChatBot Copy assignment operator" << std::endl;
+    if(this == &source){
+        return *this;
+    }
+     
+    delete _image;
+     
+    _image = new wxBitmap();
+    *_image = *source._image;
+
+    _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+     
+    _rootNode = source._rootNode;
+    _currentNode = source._currentNode;
+
+    return *this;
+} 
+
+ChatBot::ChatBot(ChatBot &&source)//Move constructor
+{
+    std::cout << "ChatBot Move Constructor" << std::endl;
+    _image = source._image;
+    source._image = NULL;
+
+    _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+    source._chatLogic = nullptr;
+
+    _rootNode = source._rootNode;
+    source._rootNode = nullptr;
+
+    _currentNode = source._currentNode;
+    source._currentNode = nullptr;
+}
+
+ChatBot &ChatBot::operator=(ChatBot &&source)//move assignment operator
+{
+    std::cout << "ChatBot Move assignment operator" << std::endl;
+     if(this == &source){
+        return *this;
+    }
+
+    delete _image;
+
+    _image = source._image;
+    source._image = NULL;
+
+    _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+    source._chatLogic = nullptr;
+
+    _rootNode = source._rootNode;
+    source._rootNode = nullptr;
+
+    _currentNode = source._currentNode;
+    source._currentNode = nullptr;
+
+    return *this;
+}
 
 ////
 //// EOF STUDENT CODE
